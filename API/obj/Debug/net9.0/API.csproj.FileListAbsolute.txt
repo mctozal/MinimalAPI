@@ -55,3 +55,12 @@
 /Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Serilog.Sinks.Console.dll
 /Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Serilog.Sinks.Debug.dll
 /Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Serilog.Sinks.File.dll
+/Users/oblite/Repos/Solution1/API/obj/Debug/net9.0/API.sourcelink.json
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll

@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text;
 using API.Behaviors;
 using API.Features.Log.Queries.List;
 using API.Features.Product.Commands.Create;
@@ -8,6 +9,10 @@ using API.Features.Product.Queries.Get;
 using API.Features.Product.Queries.List;
 using API.Persistence;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -19,6 +24,23 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secret_secret_secret_secret_secret_secret_secret"))
+                };
+            });
+  
         // Add services to the container.
         builder.Services.AddAuthorization();
         
@@ -29,6 +51,9 @@ public class Program
         });
         
         builder.Services.AddDbContext<AppDbContext>();
+        
+        builder.Services.AddControllers();
+        
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
         
@@ -44,6 +69,7 @@ public class Program
         
         var app = builder.Build();
 
+        app.MapControllers();
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
@@ -52,24 +78,27 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
+        
+        app.UseAuthentication();
         app.UseAuthorization();
+
         
         app.UseSerilogRequestLogging();
-        
+
+        app.MapControllers();
         app.MapGet("/products/{id:guid}", async (Guid id, ISender mediatr) =>
         {
             var product = await mediatr.Send(new GetProductQuery(id));
             if (product == null) return Results.NotFound();
             return Results.Ok(product);
         });
-
+        
         app.MapGet("/products", async (ISender mediatr) =>
         {
             var products = await mediatr.Send(new ListProductsQuery());
             return Results.Ok(products);
         });
-
+        
         app.MapPost("/products", async (CreateProductCommand command, ISender mediatr) =>
         {
             var product = await mediatr.Send(command);
@@ -77,13 +106,13 @@ public class Program
             
             return Results.Created($"/products/{product.Id}", new { id = product.Id });
         });
-
+        
         app.MapPut("/products", async (UpdateProductCommand command, ISender mediatr) =>
         {
             var product = await mediatr.Send(command);
             if (product == null) return Results.BadRequest();
             return Results.NoContent();
-
+        
         });
         
         app.MapDelete("/products/{id:guid}", async (Guid id, ISender mediatr) =>
@@ -92,12 +121,12 @@ public class Program
             if(id==Guid.Empty) return Results.BadRequest();
             return Results.NoContent();
         });
-
+        
         app.MapGet("/logs", async (ISender mediatr) =>
         {
            var logs= await mediatr.Send(new ListLogsQuery());
             return Results.Ok(logs);
-        });
+        }).RequireAuthorization();
 
         app.Run();
     }
