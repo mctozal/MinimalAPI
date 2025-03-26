@@ -10,11 +10,9 @@ using API.Features.Product.Queries.List;
 using API.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using MongoDB.Driver;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -76,7 +74,15 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
-            app.MapScalarApiReference();
+            app.MapScalarApiReference(
+                options =>
+                {
+                    options.Authentication = new ScalarAuthenticationOptions
+                    {
+                        PreferredSecurityScheme = "Bearer"
+                    };
+                } 
+                );
         }
 
         app.UseHttpsRedirection();
@@ -122,7 +128,21 @@ public class Program
             if(id==Guid.Empty) return Results.BadRequest();
             return Results.NoContent();
         });
-        
+
+        app.MapPost("/login", async (HttpContext context, IMediator mediator, [FromBody] LoginRequest request) =>
+        {
+            var resp = await mediator.Send(new AuthUserCommand(request.Email, request.Password));
+
+            if (resp is null || string.IsNullOrEmpty(resp))
+            {
+                return Results.Unauthorized();
+            }
+
+            return Results.Ok(resp);
+        });
+
+
+
         app.MapGet("/logs", async (ISender mediatr) =>
         {
            var logs= await mediatr.Send(new ListLogsQuery());
