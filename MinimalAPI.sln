@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{CC6F3E2E-A638-4D1C-B727-A7A35E8D3599}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.API", "Web.API\Web.API.csproj", "{CC6F3E2E-A638-4D1C-B727-A7A35E8D3599}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.UI", "Web.UI\Web.UI.csproj", "{ABB28850-6258-4957-9D07-595D2D0AC1C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +14,9 @@ Global
 		{CC6F3E2E-A638-4D1C-B727-A7A35E8D3599}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC6F3E2E-A638-4D1C-B727-A7A35E8D3599}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC6F3E2E-A638-4D1C-B727-A7A35E8D3599}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABB28850-6258-4957-9D07-595D2D0AC1C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB28850-6258-4957-9D07-595D2D0AC1C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB28850-6258-4957-9D07-595D2D0AC1C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB28850-6258-4957-9D07-595D2D0AC1C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
