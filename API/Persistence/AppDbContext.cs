@@ -1,5 +1,7 @@
 using API.Domain;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace API.Persistence;
 
@@ -14,6 +16,9 @@ public class AppDbContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Product>().ToCollection("products");
+        modelBuilder.Entity<Log>().ToCollection("logs");
+
         modelBuilder.Entity<Product>().HasKey(p => p.Id);
         modelBuilder.Entity<Product>().HasData(
             new Product("iPhone 15 Pro", "Apple's latest flagship smartphone with a ProMotion display and improved cameras", 999.99m),
@@ -29,7 +34,10 @@ public class AppDbContext : DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseInMemoryDatabase("codewithmuca");
+        // optionsBuilder.UseInMemoryDatabase("codewithmuca");
+        
+        var mongoClient = new MongoClient("mongodb://localhost:27017");
+        optionsBuilder.UseMongoDB(mongoClient, "codewithmuca");
         optionsBuilder.EnableSensitiveDataLogging(true);
     }
 }

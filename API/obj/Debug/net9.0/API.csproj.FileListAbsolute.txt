@@ -64,3 +64,10 @@
 /Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
 /Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/DnsClient.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/MongoDB.Bson.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/MongoDB.Driver.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/MongoDB.EntityFrameworkCore.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/SharpCompress.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/Snappier.dll
+/Users/oblite/Repos/Solution1/API/bin/Debug/net9.0/ZstdSharp.dll

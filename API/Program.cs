@@ -12,7 +12,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -22,6 +24,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddAuthentication(opt =>
@@ -65,8 +68,7 @@ public class Program
         
         builder.Host.UseSerilog((context, configuration) =>
             configuration.ReadFrom.Configuration(context.Configuration));
-   
-        
+
         var app = builder.Build();
 
         app.MapControllers();
@@ -81,7 +83,6 @@ public class Program
         
         app.UseAuthentication();
         app.UseAuthorization();
-
         
         app.UseSerilogRequestLogging();
 

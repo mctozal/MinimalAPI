@@ -28,10 +28,10 @@ public class LoggingPipelineBehavior<TRequest, TResponse> :
         _logger.LogInformation(
             "Handling {Name}. Request Body: {@RequestBody}. {@Date}",
             requestName,
-            request, // This logs the entire request object
-            DateTime.UtcNow);
-        
+            request, 
+            DateTime.UtcNow);        
         var result = await next();
+        
         //Response
         _logger.LogInformation(
             "Completed {Name}. Request Body: {@RequestBody}. Response Body: {@ResponseBody}. {@Date}",
@@ -45,7 +45,7 @@ public class LoggingPipelineBehavior<TRequest, TResponse> :
         dbLog.ResponseDate = DateTime.UtcNow;
         
         await _dbContext.Logs.AddAsync(dbLog);
-         _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
         
         return result;
     }
